@@ -20,6 +20,6 @@ Este projeto é uma aplicação web simples e interativa que permite aos usuári
 - Limites: Consulte a documentação oficial para quotas de uso.
 
 ## Créditos
-- Melhorias e design por **Jully Serra**.
+- Melhorias e design por **Jully Serra e Felype Melo**.
 - Baseado em requisitos de aula prática de JavaScript.
 - Integrações com APIs da OpenAI e Google Gemini."# assistente.ai" 
