@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diana - Assistente de IA</title>
+
+    <!-- Ícone da aba -->
+    <link rel="shortcut icon" href="assets/images/assistente-virtual.png" type="image/png">
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container glass">
+        <h1>Olá! Eu sou a Diana, sua assistente de IA! </h1>
+        
+        <div class="content-wrapper">
+            
+            <!-- Lado esquerdo com o GIF -->
+            <div class="assistant-section">
+               <!-- Diana animada -->
+<div class="assistant-wrapper">
+  <img src="assets/images/Avatar-unscreen.gif" alt="Assistente Virtual Animada" class="assistant-image">
+</div>
+
+
+            <!-- Lado direito com o formulário -->
+            <div class="right-section">
+                <div class="instructions-box">
+                    <h3>Oi! Seja bem-vindo(a)!</h3>
+                    <p>Antes de começarmos, você precisa colocar sua API Key 🔑.</p>
+                    <p>✨ Se for usar o <strong>OpenAI,</strong> obtenha a sua chave em 
+                        <a href="https://platform.openai.com/" target="_blank">platform.openai.com</a> (tem créditos gratuitos limitados).</p>
+                    <p>🌟 Se preferir o <strong>Gemini:</strong> gere uma chave em 
+                        <a href="https://aistudio.google.com/" target="_blank">aistudio.google.com</a> (tem plano gratuito!).</p>
+                    <p>Ah! Não esqueça: <strong>guarde sua chave num lugar seguro</strong></p>
+                    <p>Agora, escolha o provedor e o modelo para a gente começar! 🚀</p>
+                </div>
+
+                <form id="configForm">
+                    <label for="apiKey">API Key:</label>
+                    <input type="password" id="apiKey" placeholder="Insira sua API Key" required>
+
+                    <label for="provider">Provedor:</label>
+                    <select id="provider" required>
+                        <option value="">Selecione</option>
+                        <option value="OpenAI">OpenAI</option>
+                        <option value="Gemini">Gemini</option>
+                    </select>
+
+                    <label for="model">Modelo:</label>
+                    <select id="model" required disabled>
+                        <option value="">Selecione um provedor primeiro</option>
+                    </select>
+
+                    <button type="submit">Entrar</button>
+                </form>
+            </div>
+        </div>
+
+        <p id="errorMessage" class="error"></p>
+    </div>
+
+    <!-- Script -->
+    <script src="config.js"></script>
+</body>
+</html>

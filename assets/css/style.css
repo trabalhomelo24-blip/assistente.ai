@@ -1,0 +1,298 @@
+/* Fonte moderna */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --bg-dark: #1a102d;
+  --primary: #6c63ff;
+  --secondary: #9a8cff;
+  --text-light: #f2f2f2;
+  --error: #080808;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg-dark), #12081f);
+  color: var(--text-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Card central */
+.container.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 950px;
+  width: 100%;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 25px rgba(108, 99, 255, 0.2);
+  animation: fadeIn 1s ease-in-out;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1.8rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
+/* Avatar em vídeo */
+.assistant-section video {
+  width: 220px;
+  border-radius: 12px; /* opcional, deixa com cantos arredondados */
+  filter: drop-shadow(0 0 15px rgba(156, 140, 255, 0.4));
+  animation: fadeIn 1.5s ease-in-out; /* entrada suave */
+}
+
+
+/* Box de instruções */
+.instructions-box {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  color: var(--text-light);
+}
+
+.instructions-box h3 {
+  color: var(--secondary);
+  margin-bottom: 0.6rem;
+}
+
+.instructions-box a {
+  color: var(--primary);
+  text-decoration: none;
+}
+.instructions-box a:hover {
+  text-decoration: underline;
+}
+
+/* Formulário */
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--secondary);
+  text-align: left;
+}
+
+select {
+  background-color: #2b0d3a; /* Roxo escuro */
+  color: #ffffff;           /* Texto branco */
+  border: 1px solid #5e2b97;
+  padding: 10px;
+  border-radius: 8px;
+  outline: none;
+  appearance: none;  
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+
+input:focus, select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 8px rgba(108, 99, 255, 0.6);
+}
+
+/* Botão */
+button {
+  padding: 1rem;
+  border: none;
+  border-radius: 14px;
+  background: var(--primary);
+  color: rgb(22, 21, 21);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(108, 99, 255, 0.3);
+}
+
+button:hover {
+  background: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(156, 140, 255, 0.5);
+}
+
+/* Mensagem de erro */
+.error {
+  color: var(--error);
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .assistant-section {
+        order: -1; /* personagem sobe para cima no mobile */
+        margin-bottom: 30px; /* espaço entre personagem e a caixa */
+    }
+
+    .instructions-box {
+        width: 100%;
+    }
+
+    #configForm {
+        width: 100%;
+    }
+}
+
+.assistant-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  margin-top: -80px; /* aproxima a Diana da caixa */
+}
+
+.assistant-image {
+  max-width: 280px;
+  animation: riseUp 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+/* Animação: começa embaixo, sobe e para */
+@keyframes riseUp {
+  0% {
+    transform: translateY(120px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* Animação de subir por trás */
+@keyframes riseBehind {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+    z-index: -1; /* atrás da caixa */
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+    z-index: -1; /* continua atrás */
+  }
+}
+
+/* Animação de flutuar */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Aplica as duas animações na imagem/GIF da assistente */
+.assistant-section img {
+  animation: riseBehind .9s ease-out both, float 4s ease-in-out infinite;
+}
+/* --- Diana: subir por trás da caixa (sem mudar posições) --- */
+.content-wrapper { position: relative; }
+
+/* a coluna da Diana fica atrás */
+.assistant-section { 
+  position: relative; 
+  z-index: 1; 
+}
+
+/* a coluna direita e a caixa ficam na frente */
+.right-section { 
+  position: relative; 
+  z-index: 3; 
+}
+.right-section .instructions-box { 
+  position: relative; 
+  z-index: 4; 
+}
+
+/* anima a GIF subindo de baixo; continua atrás da caixa */
+.assistant-section img {
+  width: 220px;                /* ou o tamanho que você já usa */
+  max-width: 100%;
+  filter: drop-shadow(0 0 15px rgba(156,140,255,.4));
+  animation: riseBehind .9s ease-out both;  /* entrada suave */
+  will-change: transform, opacity;
+}
+
+/* keyframes da subida */
+@keyframes riseBehind {
+  from { transform: translateY(120px); opacity: 0; }
+  60%  { opacity: 1; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+/* Todas as caixinhas (inputs, selects, botões, áreas de texto) */
+input, select, button, .instructions-box, .container.glass {
+  border-radius: 12px; /* bordas arredondadas */
+  border: none; 
+  outline: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Luz animada atrás das caixas */
+input, select, button, .instructions-box, .container.glass {
+  box-shadow: 0 0 15px rgba(128, 0, 255, 0.4);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* Efeito da luz pulsando */
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(128, 0, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(128, 0, 255, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(128, 0, 255, 0.3);
+  }
+}
