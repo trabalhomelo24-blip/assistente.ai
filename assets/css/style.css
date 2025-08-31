@@ -33,7 +33,8 @@ body {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
-  padding: 2.5rem;
+  margin: 0.5rem;
+  padding: 2rem;
   max-width: 950px;
   width: 100%;
   text-align: center;
@@ -43,8 +44,8 @@ body {
 }
 
 h1 {
-  font-size: 2.2rem;
-  margin-bottom: 1.8rem;
+  font-size: 2rem;
+  margin: 1.8rem 0;
   color: var(--primary);
   font-weight: 700;
 }
@@ -55,24 +56,39 @@ h1 {
   gap: 2rem;
   justify-content: center;
   align-items: flex-start;
+  position: relative;
 }
 
+.assistant-section {
+  position: relative;
+  z-index: 1;
+}
+
+.right-section {
+  position: relative;
+  z-index: 3;
+}
+
+.right-section .instructions-box {
+  position: relative;
+  z-index: 4;
+}
 
 /* Avatar em vídeo */
 .assistant-section video {
-  width: 220px;
-  border-radius: 12px; /* opcional, deixa com cantos arredondados */
+  width: 100%;
+  max-width: 220px;
+  border-radius: 12px;
   filter: drop-shadow(0 0 15px rgba(156, 140, 255, 0.4));
-  animation: fadeIn 1.5s ease-in-out; /* entrada suave */
+  animation: fadeIn 1.5s ease-in-out;
 }
-
 
 /* Box de instruções */
 .instructions-box {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 15px;
-  padding: 1.2rem 1.5rem;
+  padding: 2rem;
   margin-bottom: 1.5rem;
   text-align: left;
   color: var(--text-light);
@@ -80,15 +96,20 @@ h1 {
 
 .instructions-box h3 {
   color: var(--secondary);
-  margin-bottom: 0.6rem;
+  margin-bottom: 1rem;
 }
 
 .instructions-box a {
   color: var(--primary);
   text-decoration: none;
 }
+
 .instructions-box a:hover {
   text-decoration: underline;
+}
+
+.instructions-box p {
+  line-height: 2.3;
 }
 
 /* Formulário */
@@ -105,26 +126,27 @@ label {
 }
 
 select {
-  background-color: #2b0d3a; /* Roxo escuro */
-  color: #ffffff;           /* Texto branco */
+  background-color: #2b0d3a;
+  color: #ffffff;
   border: 1px solid #5e2b97;
   padding: 10px;
   border-radius: 8px;
   outline: none;
-  appearance: none;  
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
 }
 
-
-input:focus, select:focus {
+/* Foco */
+input:focus,
+select:focus {
   border-color: var(--primary);
   box-shadow: 0 0 8px rgba(108, 99, 255, 0.6);
+  outline: none;
 }
 
 /* Botão */
 button {
-  padding: 1rem;
+  margin-top: 3rem;
+  padding: 0.5rem;
   border: none;
   border-radius: 14px;
   background: var(--primary);
@@ -149,45 +171,13 @@ button:hover {
   font-weight: 600;
 }
 
-/* Animações */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .content-wrapper {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .assistant-section {
-        order: -1; /* personagem sobe para cima no mobile */
-        margin-bottom: 30px; /* espaço entre personagem e a caixa */
-    }
-
-    .instructions-box {
-        width: 100%;
-    }
-
-    #configForm {
-        width: 100%;
-    }
-}
-
+/* Assistente imagem */
 .assistant-wrapper {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   position: relative;
-  margin-top: -80px; /* aproxima a Diana da caixa */
+  margin-top: -80px;
 }
 
 .assistant-image {
@@ -196,103 +186,158 @@ button:hover {
   opacity: 0;
 }
 
-/* Animação: começa embaixo, sobe e para */
+.assistant-section img {
+  width: 250px;
+  max-width: 100%;
+  filter: drop-shadow(0 0 15px rgba(156, 140, 255, .4));
+  animation: riseBehind .9s ease-out both, float 4s ease-in-out infinite;
+  will-change: transform, opacity;
+  margin-top: 1rem;
+}
+
+/* Inputs e container com efeito glow */
+input,
+select,
+button,
+.instructions-box,
+.container.glass {
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 15px rgba(128, 0, 255, 0.4);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* Input da API Key */
+#apiKey {
+  width: 100%;
+  max-width: 100%;
+  height: 39px;
+  padding-left: 10px;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes riseUp {
   0% {
     transform: translateY(120px);
     opacity: 0;
   }
+
   100% {
     transform: translateY(0);
     opacity: 1;
   }
 }
-/* Animação de subir por trás */
+
 @keyframes riseBehind {
-  from {
-    transform: translateY(100%);
+  0% {
+    transform: translateY(120px);
     opacity: 0;
-    z-index: -1; /* atrás da caixa */
   }
-  to {
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
     transform: translateY(0);
     opacity: 1;
-    z-index: -1; /* continua atrás */
   }
 }
 
-/* Animação de flutuar */
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-10px);
   }
 }
 
-/* Aplica as duas animações na imagem/GIF da assistente */
-.assistant-section img {
-  animation: riseBehind .9s ease-out both, float 4s ease-in-out infinite;
-}
-/* --- Diana: subir por trás da caixa (sem mudar posições) --- */
-.content-wrapper { position: relative; }
-
-/* a coluna da Diana fica atrás */
-.assistant-section { 
-  position: relative; 
-  z-index: 1; 
-}
-
-/* a coluna direita e a caixa ficam na frente */
-.right-section { 
-  position: relative; 
-  z-index: 3; 
-}
-.right-section .instructions-box { 
-  position: relative; 
-  z-index: 4; 
-}
-
-/* anima a GIF subindo de baixo; continua atrás da caixa */
-.assistant-section img {
-  width: 220px;                /* ou o tamanho que você já usa */
-  max-width: 100%;
-  filter: drop-shadow(0 0 15px rgba(156,140,255,.4));
-  animation: riseBehind .9s ease-out both;  /* entrada suave */
-  will-change: transform, opacity;
-}
-
-/* keyframes da subida */
-@keyframes riseBehind {
-  from { transform: translateY(120px); opacity: 0; }
-  60%  { opacity: 1; }
-  to   { transform: translateY(0); opacity: 1; }
-}
-/* Todas as caixinhas (inputs, selects, botões, áreas de texto) */
-input, select, button, .instructions-box, .container.glass {
-  border-radius: 12px; /* bordas arredondadas */
-  border: none; 
-  outline: none;
-  position: relative;
-  z-index: 1;
-}
-
-/* Luz animada atrás das caixas */
-input, select, button, .instructions-box, .container.glass {
-  box-shadow: 0 0 15px rgba(128, 0, 255, 0.4);
-  animation: glowPulse 3s ease-in-out infinite;
-}
-
-/* Efeito da luz pulsando */
 @keyframes glowPulse {
   0% {
     box-shadow: 0 0 10px rgba(128, 0, 255, 0.3);
   }
+
   50% {
     box-shadow: 0 0 20px rgba(128, 0, 255, 0.7);
   }
+
   100% {
     box-shadow: 0 0 10px rgba(128, 0, 255, 0.3);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+
+  .assistant-section {
+    order: -1;
+    margin-bottom: 40px;
+  }
+
+  .instructions-box,
+  #configForm {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  input,
+  label,
+  select {
+    font-size: 0.8rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  p {
+    font-size: 0.8rem;
+    line-height: 20px;
+  }
+
+  .container.glass {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  button,
+  #apiKey {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    padding: 10px;
   }
 }

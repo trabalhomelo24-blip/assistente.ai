@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistente de IA - Chat</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <title>Chat | Diana Assistente de IA</title>
+
+    <link rel="shortcut icon" href="assets/images/assistente-virtual.png" type="image/png">
+    <link rel="stylesheet" href="assets/css/chat.css">
 </head>
+
 <body>
     <div class="container glass">
         <div id="header">
             <h1>Assistente de IA</h1>
             <p>Provedor: <span id="providerDisplay"></span> | Modelo: <span id="modelDisplay"></span></p>
         </div>
+
+        <div id="chat-history"></div>
+
+        <div id="loading" class="loading hidden">Carregando...</div>
+        <p id="errorMessage" class="error"></p>
+
         <textarea id="question" placeholder="Digite sua pergunta..." style="width: 97%;"></textarea>
         <div class="buttons">
             <button id="askButton">Perguntar</button>
-            <button id="clearButton">Limpar</button>
+            <button id="clearButton">Limpar Chat</button>
             <button id="copyButton">Copiar Resposta</button>
             <button id="exitButton">Sair</button>
         </div>
-        <div id="response" class="response"></div>
-        <div id="loading" class="loading hidden">Carregando...</div>
-        <p id="errorMessage" class="error"></p>
     </div>
-    <script src="chat.js"></script>
+    <script src="assets/js/chat.js"></script>
 </body>
+
 </html>
