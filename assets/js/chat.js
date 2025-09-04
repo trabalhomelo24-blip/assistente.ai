@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         errorMessage.textContent = '';
         addMessage(question, true);
-
+        
         // Adiciona a pergunta do usuário ao histórico
         chatHistory.push({
             role: 'user',
@@ -81,11 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             };
-
+            
             // Adiciona a instrução do sistema e usa o histórico completo
             const messages = [{
                 role: 'system',
-                content: 'Responda a todas as perguntas em texto puro, sem usar qualquer tipo de formatação de markdown como **negrito**, #títulos#, `código`, ou listas. Alem disso, seja simpatica nas respotas'
+                content: 'Responda a todas as perguntas em texto puro, sem usar qualquer tipo de formatação de markdown como **negrito**, #títulos#, `código`, ou listas.'
             }];
             messages.push(...chatHistory.map(m => ({ role: m.role, content: m.content })));
 
@@ -103,11 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 role: m.role === 'user' ? 'user' : 'model',
                 parts: [{ text: m.content }]
             }));
-
+            
             // Adiciona a instrução para o Gemini, que precisa ser parte do prompt
             const firstContent = contents[0].parts[0].text;
             contents[0].parts[0].text = `Responda em texto puro sem markdown. Pergunta: ${firstContent}`;
-
+            
             body = JSON.stringify({
                 contents: contents
             });
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error(`Erro ${res.status}: ${errorData.error?.message || 'Falha na conexão com a API.'}`);
                 }
             }
-
+            
             const data = await res.json();
 
             let answer;
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             lastAIResponse = answer;
             addMessage(answer, false);
-
+            
             // Adiciona a resposta da IA ao histórico
             chatHistory.push({
                 role: 'assistant',
