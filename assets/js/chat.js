@@ -22,15 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatHistoryDiv = document.getElementById('chat-history');
     const loadingDiv = document.getElementById('loading');
     const errorMessage = document.getElementById('errorMessage');
+    const charCount = document.getElementById('charCount');
 
-    if (!questionInput || !askButton || !clearButton || !copyButton || !exitButton || !chatHistoryDiv || !loadingDiv || !errorMessage) {
+    if (!questionInput || !askButton || !clearButton || !copyButton || !exitButton || !chatHistoryDiv || !loadingDiv || !errorMessage || !charCount) {
         console.error('Erro: Um ou mais elementos do DOM não foram encontrados');
         errorMessage.textContent = 'Erro interno: Elementos da página não encontrados.';
         return;
     }
 
     let lastAIResponse = '';
-    // NOVO: Array para armazenar o histórico de mensagens
+    // Array para armazenar o histórico de mensagens
     const chatHistory = [];
 
     // Função para criar e adicionar uma mensagem ao chat
@@ -43,6 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
         chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
     }
 
+    // Função para atualizar o contador de caracteres
+    function updateCharCount() {
+        const count = questionInput.value.length;
+        charCount.textContent = `${count} caracteres`;
+    }
+
+    // Evento para atualizar o contador em tempo real
+    questionInput.addEventListener('input', updateCharCount);
+
     async function askAI() {
         const question = questionInput.value.trim();
         if (!question) {
@@ -52,14 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         errorMessage.textContent = '';
         addMessage(question, true);
-        
-        // NOVO: Adiciona a pergunta do usuário ao histórico
+
+        // Adiciona a pergunta do usuário ao histórico
         chatHistory.push({
             role: 'user',
             content: question
         });
 
         questionInput.value = '';
+        updateCharCount(); // Reseta o contador após enviar
         loadingDiv.classList.remove('hidden');
         askButton.disabled = true;
 
@@ -70,11 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             };
-            
-            // NOVO: Adiciona a instrução do sistema e usa o histórico completo
+
+            // Adiciona a instrução do sistema e usa o histórico completo
             const messages = [{
                 role: 'system',
-                content: 'Responda a todas as perguntas em texto puro, sem usar qualquer tipo de formatação de markdown como **negrito**, #títulos#, `código`, ou listas.'
+                content: 'Responda a todas as perguntas em texto puro, sem usar qualquer tipo de formatação de markdown como **negrito**, #títulos#, `código`, ou listas. Alem disso, seja simpatica nas respotas'
             }];
             messages.push(...chatHistory.map(m => ({ role: m.role, content: m.content })));
 
@@ -87,16 +98,16 @@ document.addEventListener('DOMContentLoaded', () => {
             url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
             headers = { 'Content-Type': 'application/json' };
 
-            // NOVO: Envia o histórico completo para o Gemini
+            // Envia o histórico completo para o Gemini
             const contents = chatHistory.map(m => ({
                 role: m.role === 'user' ? 'user' : 'model',
                 parts: [{ text: m.content }]
             }));
-            
+
             // Adiciona a instrução para o Gemini, que precisa ser parte do prompt
             const firstContent = contents[0].parts[0].text;
             contents[0].parts[0].text = `Responda em texto puro sem markdown. Pergunta: ${firstContent}`;
-            
+
             body = JSON.stringify({
                 contents: contents
             });
@@ -116,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error(`Erro ${res.status}: ${errorData.error?.message || 'Falha na conexão com a API.'}`);
                 }
             }
-            
+
             const data = await res.json();
 
             let answer;
@@ -128,8 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             lastAIResponse = answer;
             addMessage(answer, false);
-            
-            // NOVO: Adiciona a resposta da IA ao histórico
+
+            // Adiciona a resposta da IA ao histórico
             chatHistory.push({
                 role: 'assistant',
                 content: answer
@@ -151,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirmClear) {
             chatHistoryDiv.innerHTML = '';
             questionInput.value = '';
+            updateCharCount(); // Reseta o contador ao limpar
             lastAIResponse = '';
             errorMessage.textContent = '';
             chatHistory.length = 0;
@@ -173,4 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'index.html';
         }
     });
+
+    // Inicializa o contador ao carregar a página
+    updateCharCount();
 });
