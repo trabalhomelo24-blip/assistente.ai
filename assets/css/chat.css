@@ -135,7 +135,16 @@ body {
     transition: all 0.3s ease;
     resize: vertical;
     min-height: 60px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem; /* Reduzido para aproximar do contador */
+}
+
+/* NOVO: Estilo do contador de caracteres */
+.char-count {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--secondary);
+    margin: 0 0 1rem 0;
+    padding-right: 18px; /* Alinha com o padding da textarea */
 }
 
 #question:focus {
@@ -270,6 +279,11 @@ body {
         padding: 10px 15px;
         font-size: 0.8rem;
         min-height: 80px;
+    }
+
+    .char-count {
+        font-size: 0.75rem;
+        padding-right: 15px;
     }
 
     .buttons {
